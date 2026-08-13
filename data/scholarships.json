@@ -1,0 +1,100 @@
+[
+  {
+    "id": "S001",
+    "name": "ทุนเสมอภาค (กสศ.)",
+    "minAge": 12,
+    "maxAge": 14,
+    "grades": ["ม.1", "ม.2", "ม.3"],
+    "areas": ["ทั่วประเทศ"],
+    "requiresExtremePoverty": true,
+    "amountPerTerm": 3000,
+    "applyUrl": "https://cct.eef.or.th/",
+    "note": "เงินอุดหนุนแบบมีเงื่อนไขสำหรับนักเรียนยากจนพิเศษ สมัคร/ยืนยันข้อมูลผ่านโรงเรียนและระบบของ กสศ. เว็บไซต์นี้มีปฏิทินและขั้นตอนล่าสุดของแต่ละภาคเรียน"
+  },
+  {
+    "id": "S002",
+    "name": "ทุนก้าวเพื่อน้อง (กสศ.)",
+    "minAge": 15,
+    "maxAge": 17,
+    "grades": ["ม.4", "ม.5", "ม.6"],
+    "areas": ["ทั่วประเทศ"],
+    "requiresExtremePoverty": false,
+    "amountPerTerm": 0,
+    "applyUrl": "https://www.eef.or.th/",
+    "note": "ทุนสำหรับนักเรียนมัธยมปลายที่ขาดแคลนทุนทรัพย์หรือมีความเสี่ยงหลุดจากระบบการศึกษา รายละเอียดการรับสมัครประกาศทุกปีบนเว็บไซต์หลักของ กสศ."
+  },
+  {
+    "id": "S003",
+    "name": "ทุนการศึกษายุวพัฒน์ (สายสามัญ)",
+    "minAge": 12,
+    "maxAge": 17,
+    "grades": ["ม.1", "ม.2", "ม.3", "ม.4", "ม.5", "ม.6"],
+    "areas": ["ทั่วประเทศ"],
+    "requiresExtremePoverty": true,
+    "amountPerTerm": 3500,
+    "applyUrl": "https://www.yuvabadhanafoundation.org/th/join/",
+    "note": "มูลนิธิยุวพัฒน์ให้ทุนต่อเนื่องจนจบ ม.6 สำหรับนักเรียนฐานะยากจน สมัครผ่านโรงเรียนที่เข้าร่วมโครงการ ระบบทุนออนไลน์เปิดปีละครั้ง (ช่วงปลายปี)"
+  },
+  {
+    "id": "S004",
+    "name": "ทุนการศึกษาพระราชทาน ม.ท.ศ.",
+    "minAge": 14,
+    "maxAge": 14,
+    "grades": ["ม.3"],
+    "areas": ["ทั่วประเทศ"],
+    "requiresExtremePoverty": false,
+    "amountPerTerm": 0,
+    "applyUrl": "https://opec.go.th/news/detail/2930",
+    "note": "ทุนสำหรับนักเรียนที่กำลังจะจบ ม.3 เกณฑ์คือเรียนดี ประพฤติดี สมัครผ่านสำนักงานศึกษาธิการจังหวัดของตนเอง ทุนต่อเนื่องจนจบปริญญาตรี"
+  },
+  {
+    "id": "S005",
+    "name": "ทุนมูลนิธิร่วมจิตต์น้อมเกล้าฯ เพื่อเยาวชน",
+    "minAge": 12,
+    "maxAge": 17,
+    "grades": ["ม.1", "ม.2", "ม.3", "ม.4", "ม.5", "ม.6"],
+    "areas": ["ทั่วประเทศ"],
+    "requiresExtremePoverty": true,
+    "amountPerTerm": 0,
+    "applyUrl": "https://www.ruamchit-normklao.org/index.asp",
+    "note": "ทุนสำหรับนักเรียนฐานะยากจน ผลการเรียนดี ความประพฤติเรียบร้อย คัดเลือกผ่านผู้ว่าราชการจังหวัดในแต่ละพื้นที่"
+  },
+  {
+    "id": "S006",
+    "name": "ทุนมูลนิธิทิสโก้เพื่อการกุศล",
+    "minAge": 12,
+    "maxAge": 17,
+    "grades": ["ม.1", "ม.2", "ม.3", "ม.4", "ม.5", "ม.6"],
+    "areas": ["ทั่วประเทศ"],
+    "requiresExtremePoverty": true,
+    "amountPerTerm": 0,
+    "applyUrl": "https://tiscofoundation.org/education-scholarship/",
+    "note": "ทุนต่อเนื่องสำหรับนักเรียนขาดแคลนทุนทรัพย์ สมัครผ่านระบบออนไลน์ มีคู่มือการสมัครแยกตามระดับชั้นบนเว็บไซต์"
+  },
+  {
+    "id": "S007",
+    "name": "Project 14 (สสวท.) — เรียน/ติวฟรีทุกวิชา",
+    "minAge": 12,
+    "maxAge": 17,
+    "grades": ["ม.1", "ม.2", "ม.3", "ม.4", "ม.5", "ม.6"],
+    "areas": ["ทั่วประเทศ"],
+    "requiresExtremePoverty": false,
+    "amountPerTerm": 0,
+    "isTutoringOnly": true,
+    "applyUrl": "https://proj14.ipst.ac.th/",
+    "note": "แพลตฟอร์มเรียนออนไลน์ฟรีของ สสวท. มีคลิปสอนครบทุกบทเรียนวิชาวิทย์/คณิต/เทคโนโลยี ตั้งแต่ประถมถึงมัธยมปลาย ไม่ต้องสมัครสมาชิกก็เข้าเรียนได้"
+  },
+  {
+    "id": "S008",
+    "name": "TruePlookpanya — คลังข้อสอบ O-NET ติวฟรี",
+    "minAge": 12,
+    "maxAge": 17,
+    "grades": ["ม.1", "ม.2", "ม.3", "ม.4", "ม.5", "ม.6"],
+    "areas": ["ทั่วประเทศ"],
+    "requiresExtremePoverty": false,
+    "amountPerTerm": 0,
+    "isTutoringOnly": true,
+    "applyUrl": "https://www.trueplookpanya.com/examination",
+    "note": "คลังข้อสอบและแนวข้อสอบ O-NET/GAT-PAT ฟรีทุกวิชา ทุกระดับชั้น ม.1-ม.6 พร้อมเฉลย ใช้ทบทวนด้วยตัวเองได้"
+  }
+]

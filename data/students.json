@@ -1,0 +1,22 @@
+[
+  { "id": "ST001", "name": "ธนภัทร แสงอรุณ",   "grade": "ม.1", "area": "เชียงใหม่",     "consecutiveAbsentDays": 0, "scoreThisMonth": 82, "scoreLastMonth": 80, "daysSinceLastChatReply": 1 },
+  { "id": "ST002", "name": "กมลชนก ศรีสุวรรณ", "grade": "ม.1", "area": "เชียงราย",     "consecutiveAbsentDays": 6, "scoreThisMonth": 76, "scoreLastMonth": 78, "daysSinceLastChatReply": 2 },
+  { "id": "ST003", "name": "ปฏิภาณ วงศ์ษา",     "grade": "ม.1", "area": "แม่ฮ่องสอน",   "consecutiveAbsentDays": 1, "scoreThisMonth": 60, "scoreLastMonth": 85, "daysSinceLastChatReply": 3 },
+  { "id": "ST004", "name": "สุพิชญา บุญรอด",    "grade": "ม.1", "area": "น่าน",         "consecutiveAbsentDays": 2, "scoreThisMonth": 74, "scoreLastMonth": 75, "daysSinceLastChatReply": 9 },
+  { "id": "ST005", "name": "อรรถพล ทองคำ",      "grade": "ม.2", "area": "ตาก",          "consecutiveAbsentDays": 7, "scoreThisMonth": 55, "scoreLastMonth": 80, "daysSinceLastChatReply": 1 },
+  { "id": "ST006", "name": "วรินทร สุขเจริญ",   "grade": "ม.2", "area": "อุตรดิตถ์",    "consecutiveAbsentDays": 6, "scoreThisMonth": 68, "scoreLastMonth": 70, "daysSinceLastChatReply": 10 },
+  { "id": "ST007", "name": "ชญานิษฐ์ ดวงแก้ว",  "grade": "ม.2", "area": "พิษณุโลก",     "consecutiveAbsentDays": 0, "scoreThisMonth": 60, "scoreLastMonth": 90, "daysSinceLastChatReply": 8 },
+  { "id": "ST008", "name": "ภูริพัฒน์ มณีวรรณ", "grade": "ม.2", "area": "สุโขทัย",      "consecutiveAbsentDays": 8, "scoreThisMonth": 50, "scoreLastMonth": 85, "daysSinceLastChatReply": 12 },
+  { "id": "ST009", "name": "เบญจวรรณ ใจซื่อ",   "grade": "ม.3", "area": "อุบลราชธานี", "consecutiveAbsentDays": 0, "scoreThisMonth": 90, "scoreLastMonth": 88, "daysSinceLastChatReply": 0 },
+  { "id": "ST010", "name": "ธีรภัทร คำแก้ว",    "grade": "ม.3", "area": "ศรีสะเกษ",     "consecutiveAbsentDays": 4, "scoreThisMonth": 78, "scoreLastMonth": 80, "daysSinceLastChatReply": 5 },
+  { "id": "ST011", "name": "ณัฏฐณิชา พรมมา",    "grade": "ม.3", "area": "สุรินทร์",     "consecutiveAbsentDays": 5, "scoreThisMonth": 69, "scoreLastMonth": 70, "daysSinceLastChatReply": 2 },
+  { "id": "ST012", "name": "กิตติพงษ์ อ่อนสี",   "grade": "ม.4", "area": "เลย",          "consecutiveAbsentDays": 0, "scoreThisMonth": 68, "scoreLastMonth": 80, "daysSinceLastChatReply": 1 },
+  { "id": "ST013", "name": "พิมพ์ชนก หลวงจันทร์","grade": "ม.4", "area": "หนองคาย",      "consecutiveAbsentDays": 1, "scoreThisMonth": 73, "scoreLastMonth": 75, "daysSinceLastChatReply": 6 },
+  { "id": "ST014", "name": "ศุภกร ทิพย์วงศ์",   "grade": "ม.4", "area": "นครพนม",       "consecutiveAbsentDays": 2, "scoreThisMonth": 80, "scoreLastMonth": 82, "daysSinceLastChatReply": 7 },
+  { "id": "ST015", "name": "อาทิตยา บัวลอย",    "grade": "ม.5", "area": "กาญจนบุรี",    "consecutiveAbsentDays": 9, "scoreThisMonth": 35, "scoreLastMonth": 60, "daysSinceLastChatReply": 14 },
+  { "id": "ST016", "name": "นันทวัฒน์ เพชรรัตน์","grade": "ม.5", "area": "ราชบุรี",     "consecutiveAbsentDays": 0, "scoreThisMonth": 93, "scoreLastMonth": 95, "daysSinceLastChatReply": 0 },
+  { "id": "ST017", "name": "รัตติกาล ทองใบ",     "grade": "ม.5", "area": "เพชรบุรี",     "consecutiveAbsentDays": 3, "scoreThisMonth": 75, "scoreLastMonth": 77, "daysSinceLastChatReply": 4 },
+  { "id": "ST018", "name": "คุณานนต์ ศิริวัฒน์", "grade": "ม.6", "area": "นครศรีธรรมราช","consecutiveAbsentDays": 6, "scoreThisMonth": 64, "scoreLastMonth": 65, "daysSinceLastChatReply": 1 },
+  { "id": "ST019", "name": "ปาริชาติ แก้วมณี",   "grade": "ม.6", "area": "สงขลา",        "consecutiveAbsentDays": 0, "scoreThisMonth": 45, "scoreLastMonth": 70, "daysSinceLastChatReply": 2 },
+  { "id": "ST020", "name": "วีรภัทร จันทร์เพ็ญ", "grade": "ม.6", "area": "ยะลา",         "consecutiveAbsentDays": 10, "scoreThisMonth": 30, "scoreLastMonth": 55, "daysSinceLastChatReply": 20 }
+]

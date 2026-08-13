@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ม.6/7 — ระบบเช็คคะแนนตกเกณฑ์</title>
+<style>
+  :root {
+    --green: #2f9e44; --green-bg: #ebfbee;
+    --red: #e03131; --red-bg: #fff0f0;
+    --ink: #23272b; --muted: #6b7280; --border: #e5e7eb;
+    --brand: #2b6cb0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: "Segoe UI", "Sarabun", system-ui, sans-serif;
+    background: #fafafa; color: var(--ink); padding: 24px;
+  }
+  .wrap { max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 4px 0; }
+  .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  h2 { font-size: 16px; margin: 0 0 12px 0; }
+  section {
+    background: white; border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px; margin-bottom: 20px;
+  }
+  label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 4px; margin-top: 12px; }
+  input, select {
+    width: 100%; padding: 8px 10px; border: 1px solid var(--border);
+    border-radius: 6px; font-size: 14px; font-family: inherit;
+  }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .row > div { flex: 1; min-width: 140px; }
+  button {
+    margin-top: 16px; background: var(--brand); color: white; border: none;
+    padding: 10px 18px; border-radius: 6px; font-size: 14px; cursor: pointer;
+  }
+  button:hover { opacity: 0.9; }
+  .msg { margin-top: 12px; font-size: 13px; padding: 10px; border-radius: 6px; }
+  .msg.success { background: var(--green-bg); color: var(--green); }
+  .msg.error { background: var(--red-bg); color: var(--red); }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+  th, td { padding: 8px 10px; text-align: left; font-size: 13px; border-bottom: 1px solid var(--border); }
+  th { background: #f4f4f5; color: var(--muted); font-size: 11px; text-transform: uppercase; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .badge.red { background: var(--red-bg); color: var(--red); }
+  .badge.green { background: var(--green-bg); color: var(--green); }
+  .teacher-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .teacher-item { font-size: 13px; }
+  .teacher-item .status { color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>ม.6/7 — ระบบเช็คคะแนนตกเกณฑ์</h1>
+  <div class="subtitle">อัปโหลดคะแนนจาก Excel แล้วระบบจะคำนวณ + แจ้งเตือนครูอัตโนมัติ (25 คน)</div>
+
+  <!-- ตั้งค่า LINE userId ครู -->
+  <section>
+    <h2>⚙️ ตั้งค่า LINE ของครู (ทำครั้งเดียว)</h2>
+    <p style="font-size:13px;color:var(--muted);margin-top:0">
+      ครูแต่ละคนต้องแอด LINE OA เป็นเพื่อนก่อน แล้วเอา userId มาใส่ตรงนี้ ระบบถึงจะ push แจ้งเตือนถึงได้
+    </p>
+    <div class="teacher-grid" id="teacherGrid"></div>
+  </section>
+
+  <!-- อัปโหลดคะแนน -->
+  <section>
+    <h2>📤 อัปโหลดคะแนน</h2>
+    <form id="uploadForm">
+      <div class="row">
+        <div>
+          <label>วิชา</label>
+          <select id="subject" required>
+            <option value="math">คณิตศาสตร์</option>
+            <option value="science">วิทยาศาสตร์</option>
+            <option value="english">ภาษาอังกฤษ</option>
+          </select>
+        </div>
+        <div>
+          <label>บท/หัวข้อที่สอบ</label>
+          <input type="text" id="chapter" placeholder="เช่น บทที่ 3 สมการ" required />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>คะแนนเต็ม</label>
+          <input type="number" id="fullScore" placeholder="เช่น 30" required min="1" />
+        </div>
+        <div>
+          <label>เกณฑ์ผ่าน (%)</label>
+          <input type="number" id="threshold" placeholder="เช่น 60" required min="1" max="100" />
+        </div>
+      </div>
+      <label>ไฟล์ Excel (คอลัมน์: รหัสนักเรียน หรือ ชื่อ-นามสกุล, คะแนน)</label>
+      <input type="file" id="file" accept=".xlsx,.xls" required />
+      <button type="submit">อัปโหลดและคำนวณ</button>
+      <div id="uploadMsg"></div>
+    </form>
+  </section>
+
+  <!-- ตารางคะแนน -->
+  <section>
+    <h2>📋 คะแนนทั้งหมดที่อัปโหลดแล้ว</h2>
+    <div id="tableWrap">กำลังโหลด...</div>
+  </section>
+</div>
+
+<script>
+const ROLES = [
+  { key: 'homeroom', label: '👩‍🏫 ครูประจำชั้น' },
+  { key: 'math', label: '🔢 ครูคณิตศาสตร์' },
+  { key: 'science', label: '🔬 ครูวิทยาศาสตร์' },
+  { key: 'english', label: '🔤 ครูภาษาอังกฤษ' },
+];
+
+async function loadTeachers() {
+  const res = await fetch('/classroom/api/teachers');
+  const data = await res.json();
+  const grid = document.getElementById('teacherGrid');
+  grid.innerHTML = ROLES.map(r => `
+    <div class="teacher-item">
+      <label style="margin-top:0">${r.label}</label>
+      <input type="text" id="teacher-${r.key}" placeholder="วาง LINE userId ที่นี่" />
+      <div class="status">${data[r.key] ? 'ตั้งค่าไว้แล้ว: ' + data[r.key] : 'ยังไม่ได้ตั้งค่า'}</div>
+      <button type="button" onclick="saveTeacher('${r.key}')" style="padding:6px 12px;font-size:12px;margin-top:6px;">บันทึก</button>
+    </div>
+  `).join('');
+}
+
+async function saveTeacher(role) {
+  const input = document.getElementById('teacher-' + role);
+  const userId = input.value.trim();
+  if (!userId) return;
+  const res = await fetch('/classroom/api/teachers', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ role, userId }),
+  });
+  if (res.ok) {
+    input.value = '';
+    loadTeachers();
+  } else {
+    alert('บันทึกไม่สำเร็จ');
+  }
+}
+
+async function loadScores() {
+  const res = await fetch('/classroom/api/scores');
+  const scores = await res.json();
+  const wrap = document.getElementById('tableWrap');
+  if (scores.length === 0) {
+    wrap.innerHTML = '<p style="color:var(--muted);font-size:13px">ยังไม่มีข้อมูลคะแนน ลองอัปโหลดไฟล์ดูด้านบน</p>';
+    return;
+  }
+  const rows = scores.map(s => `
+    <tr>
+      <td>${s.name}</td>
+      <td>${s.subjectLabel}</td>
+      <td>${s.chapter}</td>
+      <td>${s.score}/${s.fullScore}</td>
+      <td>${s.percent}%</td>
+      <td><span class="badge ${s.status === 'ตก' ? 'red' : 'green'}">${s.status}</span></td>
+    </tr>
+  `).join('');
+  wrap.innerHTML = `
+    <table>
+      <thead>
+        <tr><th>ชื่อ</th><th>วิชา</th><th>บท</th><th>คะแนน</th><th>%</th><th>สถานะ</th></tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const msgBox = document.getElementById('uploadMsg');
+  msgBox.innerHTML = '';
+
+  const formData = new FormData();
+  formData.append('subject', document.getElementById('subject').value);
+  formData.append('chapter', document.getElementById('chapter').value);
+  formData.append('fullScore', document.getElementById('fullScore').value);
+  formData.append('threshold', document.getElementById('threshold').value);
+  formData.append('file', document.getElementById('file').files[0]);
+
+  try {
+    const res = await fetch('/classroom/api/upload', { method: 'POST', body: formData });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'อัปโหลดไม่สำเร็จ');
+
+    msgBox.innerHTML = `<div class="msg success">
+      อ่านได้ ${data.totalRows} แถว จับคู่นักเรียนในห้องได้ ${data.matched} คน
+      (ข้าม ${data.unmatched} คนที่ไม่อยู่ในห้องนี้) — พบคนตกเกณฑ์ ${data.failedCount} คน
+      ${data.failedCount > 0 ? '— ส่งแจ้งเตือนครูแล้ว' : ''}
+    </div>`;
+    document.getElementById('uploadForm').reset();
+    loadScores();
+  } catch (err) {
+    msgBox.innerHTML = `<div class="msg error">${err.message}</div>`;
+  }
+});
+
+loadTeachers();
+loadScores();
+</script>
+</body>
+</html>

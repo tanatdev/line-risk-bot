@@ -1,0 +1,18 @@
+﻿[
+  {
+    "id": "u_admin",
+    "username": "admin",
+    "password": "adminpassword",
+    "displayName": "ผู้ดูแลระบบ",
+    "role": "admin",
+    "createdAt": "2026-08-13T00:00:00.000Z"
+  },
+  {
+    "id": "u_teacher1",
+    "username": "teacher",
+    "password": "teacherpassword",
+    "displayName": "ครูประจำชั้น",
+    "role": "teacher",
+    "createdAt": "2026-08-13T00:00:00.000Z"
+  }
+]

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Bridge — แดชบอร์ดครู</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0e1a;--surface:#111827;--card:rgba(255,255,255,0.04);
+  --glass:rgba(255,255,255,0.06);--border:rgba(255,255,255,0.08);
+  --text:#e2e8f0;--muted:#94a3b8;--dim:#64748b;
+  --brand:#6366f1;--brand-glow:rgba(99,102,241,0.3);
+  --accent:#22d3ee;--success:#10b981;--warning:#f59e0b;--danger:#ef4444;
+}
+body{
+  min-height:100vh;font-family:'Inter','Noto Sans Thai',sans-serif;
+  background:var(--bg);color:var(--text);
+}
+/* Background gradient */
+body::before{
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+  background:radial-gradient(ellipse at 20% 0%,rgba(99,102,241,0.12),transparent 50%),
+  radial-gradient(ellipse at 80% 100%,rgba(34,211,238,0.08),transparent 50%);
+  z-index:0;pointer-events:none;
+}
+/* Sidebar */
+.layout{display:flex;min-height:100vh;position:relative;z-index:1}
+.sidebar{
+  width:260px;background:rgba(17,24,39,0.8);backdrop-filter:blur(20px);
+  border-right:1px solid var(--border);padding:24px 16px;
+  display:flex;flex-direction:column;position:fixed;height:100vh;z-index:10;
+}
+.sidebar .logo{padding:8px 12px;margin-bottom:24px}
+.sidebar .logo h2{font-size:20px;font-weight:800;background:linear-gradient(135deg,var(--brand),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sidebar .logo p{font-size:11px;color:var(--dim);margin-top:2px}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;
+  color:var(--muted);font-size:14px;cursor:pointer;transition:all .2s;margin-bottom:4px;
+  text-decoration:none;
+}
+.nav-item:hover,.nav-item.active{background:rgba(99,102,241,0.15);color:var(--text)}
+.nav-item.active{box-shadow:inset 3px 0 0 var(--brand)}
+.nav-item .icon{font-size:18px;width:24px;text-align:center}
+.sidebar-footer{margin-top:auto;padding:12px;border-top:1px solid var(--border)}
+.user-info{display:flex;align-items:center;gap:10px}
+.user-avatar{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,var(--brand),var(--accent));
+  display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;
+}
+.user-name{font-size:13px;font-weight:500}
+.user-role{font-size:11px;color:var(--dim)}
+.logout-btn{
+  display:block;width:100%;margin-top:10px;padding:8px;
+  background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);
+  border-radius:8px;color:#fca5a5;font-size:12px;cursor:pointer;
+  font-family:inherit;text-align:center;transition:all .2s;
+}
+.logout-btn:hover{background:rgba(239,68,68,0.2)}
+/* Main content */
+.main{margin-left:260px;padding:28px 32px;flex:1;min-width:0}
+.page-header{margin-bottom:28px}
+.page-header h1{font-size:24px;font-weight:700;letter-spacing:-0.5px}
+.page-header p{font-size:13px;color:var(--muted);margin-top:4px}
+/* Stats cards */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stat-card{
+  background:var(--glass);backdrop-filter:blur(16px);
+  border:1px solid var(--border);border-radius:16px;padding:20px;
+  position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;
+}
+.stat-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.stat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  border-radius:16px 16px 0 0;
+}
+.stat-card.danger::before{background:linear-gradient(90deg,var(--danger),#f97316)}
+.stat-card.warning::before{background:linear-gradient(90deg,var(--warning),#fbbf24)}
+.stat-card.success::before{background:linear-gradient(90deg,var(--success),#34d399)}
+.stat-card.info::before{background:linear-gradient(90deg,var(--brand),var(--accent))}
+.stat-icon{font-size:28px;margin-bottom:8px}
+.stat-value{font-size:32px;font-weight:800;letter-spacing:-1px}
+.stat-label{font-size:12px;color:var(--muted);margin-top:2px}
+/* Section */
+.section{
+  background:var(--glass);backdrop-filter:blur(16px);
+  border:1px solid var(--border);border-radius:16px;padding:24px;
+  margin-bottom:20px;
+}
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.section-title{font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px}
+.section-title .dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.search-box{
+  padding:8px 14px;background:rgba(255,255,255,0.05);border:1px solid var(--border);
+  border-radius:10px;color:var(--text);font-size:13px;font-family:inherit;
+  outline:none;width:240px;transition:border-color .2s;
+}
+.search-box:focus{border-color:var(--brand)}
+/* Table */
+table{width:100%;border-collapse:collapse}
+th{
+  text-align:left;padding:10px 14px;font-size:11px;text-transform:uppercase;
+  letter-spacing:0.5px;color:var(--dim);border-bottom:1px solid var(--border);
+  font-weight:600;
+}
+td{
+  padding:12px 14px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.04);
+  vertical-align:middle;
+}
+tr:hover td{background:rgba(255,255,255,0.02)}
+.badge{
+  display:inline-flex;align-items:center;gap:4px;padding:4px 10px;
+  border-radius:20px;font-size:11px;font-weight:600;
+}
+.badge.high{background:rgba(239,68,68,0.15);color:#fca5a5}
+.badge.medium{background:rgba(245,158,11,0.15);color:#fcd34d}
+.badge.low{background:rgba(16,185,129,0.15);color:#6ee7b7}
+.badge.dropout{background:rgba(139,92,246,0.15);color:#c4b5fd}
+.score-bar{
+  width:80px;height:6px;background:rgba(255,255,255,0.08);border-radius:3px;
+  overflow:hidden;display:inline-block;vertical-align:middle;margin-left:8px;
+}
+.score-fill{height:100%;border-radius:3px;transition:width .6s ease}
+.reason-text{font-size:12px;color:var(--muted);max-width:300px}
+/* Tabs */
+.tabs{display:flex;gap:4px;margin-bottom:16px}
+.tab{
+  padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;
+  color:var(--muted);cursor:pointer;transition:all .2s;border:none;
+  background:transparent;font-family:inherit;
+}
+.tab:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+.tab.active{color:var(--text);background:rgba(99,102,241,0.2)}
+/* Action button */
+.action-btn{
+  padding:6px 12px;border-radius:8px;font-size:12px;font-weight:500;
+  border:1px solid var(--border);background:rgba(255,255,255,0.05);
+  color:var(--text);cursor:pointer;font-family:inherit;transition:all .2s;
+}
+.action-btn:hover{background:rgba(99,102,241,0.2);border-color:var(--brand)}
+.action-btn.done{background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.3);color:#6ee7b7}
+/* Responsive */
+@media(max-width:1024px){
+  .sidebar{width:72px;padding:16px 8px}
+  .sidebar .logo h2,.sidebar .logo p,.nav-text,.user-name,.user-role,.logout-btn{display:none}
+  .nav-item{justify-content:center;padding:12px}
+  .main{margin-left:72px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .sidebar{display:none}
+  .main{margin-left:0;padding:16px}
+  .stats-grid{grid-template-columns:1fr 1fr}
+}
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.stat-card,.section{animation:fadeUp .5s ease both}
+.stat-card:nth-child(2){animation-delay:.1s}
+.stat-card:nth-child(3){animation-delay:.2s}
+.stat-card:nth-child(4){animation-delay:.3s}
+.section:nth-of-type(2){animation-delay:.15s}
+/* Pulse dot */
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.pulse{animation:pulse 2s ease-in-out infinite}
+.empty-state{text-align:center;padding:40px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<!-- Sidebar -->
+<div class="layout">
+<aside class="sidebar">
+  <div class="logo"><h2>🎓 Skill Bridge</h2><p>Teacher Dashboard</p></div>
+  <a class="nav-item active" href="/dashboard.html"><span class="icon">📊</span><span class="nav-text">แดชบอร์ด</span></a>
+  <a class="nav-item" href="/classroom"><span class="icon">📝</span><span class="nav-text">จัดการห้องเรียน</span></a>
+  <a class="nav-item" onclick="showTab('wellbeing')"><span class="icon">💚</span><span class="nav-text">Wellbeing</span></a>
+  <a class="nav-item" onclick="showTab('dropout')"><span class="icon">🆘</span><span class="nav-text">เสี่ยงหลุด</span></a>
+  <div class="sidebar-footer">
+    <div class="user-info">
+      <div class="user-avatar" id="avatarInitial">?</div>
+      <div><div class="user-name" id="userName">—</div><div class="user-role" id="userRole">—</div></div>
+    </div>
+    <button class="logout-btn" onclick="logout()">ออกจากระบบ</button>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main">
+  <div class="page-header">
+    <h1>แดชบอร์ดสำหรับครู</h1>
+    <p>สถานะความเสี่ยงของนักเรียน คำนวณจาก attendance / คะแนน / การตอบแชท &nbsp;|&nbsp; อัปเดตอัตโนมัติทุก 30 วินาที</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card danger"><div class="stat-icon">🔴</div><div class="stat-value" id="highCount">-</div><div class="stat-label">เสี่ยงสูง</div></div>
+    <div class="stat-card warning"><div class="stat-icon">🟡</div><div class="stat-value" id="medCount">-</div><div class="stat-label">เฝ้าระวัง</div></div>
+    <div class="stat-card success"><div class="stat-icon">🟢</div><div class="stat-value" id="lowCount">-</div><div class="stat-label">ปกติ</div></div>
+    <div class="stat-card info"><div class="stat-icon">🆘</div><div class="stat-value" id="dropoutCount">-</div><div class="stat-label">เสี่ยงหลุดจากระบบ</div></div>
+  </div>
+
+  <!-- Risk Table Section -->
+  <div class="section" id="riskSection">
+    <div class="section-header">
+      <div class="section-title"><span class="dot pulse" style="background:var(--danger)"></span> สถานะความเสี่ยงนักเรียน</div>
+      <input class="search-box" placeholder="🔍 ค้นหาชื่อนักเรียน..." oninput="filterStudents(this.value)" id="searchBox">
+    </div>
+    <div class="tabs">
+      <button class="tab active" onclick="filterRisk('all',this)">ทั้งหมด</button>
+      <button class="tab" onclick="filterRisk('high',this)">🔴 เสี่ยงสูง</button>
+      <button class="tab" onclick="filterRisk('medium',this)">🟡 เฝ้าระวัง</button>
+      <button class="tab" onclick="filterRisk('low',this)">🟢 ปกติ</button>
+    </div>
+    <table>
+      <thead><tr><th>ชื่อ</th><th>ชั้น</th><th>พื้นที่</th><th>สถานะ</th><th>คะแนนเสี่ยง</th><th>สาเหตุ</th></tr></thead>
+      <tbody id="riskBody"></tbody>
+    </table>
+  </div>
+
+  <!-- Wellbeing Section -->
+  <div class="section" id="wellbeingSection" style="display:none">
+    <div class="section-header">
+      <div class="section-title"><span class="dot pulse" style="background:var(--warning)"></span> Wellbeing Flags — นักเรียนที่อาจต้องการความช่วยเหลือ</div>
+    </div>
+    <table>
+      <thead><tr><th>ชื่อ</th><th>อารมณ์</th><th>วันที่</th><th>หมายเหตุ</th><th>จัดการ</th></tr></thead>
+      <tbody id="wellbeingBody"></tbody>
+    </table>
+  </div>
+
+  <!-- Dropout Section -->
+  <div class="section" id="dropoutSection" style="display:none">
+    <div class="section-header">
+      <div class="section-title"><span class="dot pulse" style="background:var(--brand)"></span> 🆘 นักเรียนเสี่ยงหลุดจากระบบ</div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px">นักเรียนที่มีหลายปัจจัยเสี่ยงซ้อนกัน (ขาดเรียนมาก + คะแนนตก + ไม่ตอบแชท + ไม่มีทุนรองรับ)</p>
+    <table>
+      <thead><tr><th>ชื่อ</th><th>ชั้น</th><th>คะแนนเสี่ยง</th><th>ปัจจัยเสี่ยง</th><th>จัดการ</th></tr></thead>
+      <tbody id="dropoutBody"></tbody>
+    </table>
+  </div>
+</main>
+</div>
+
+<script>
+// Auth check
+const token = localStorage.getItem('sb_token');
+const user = JSON.parse(localStorage.getItem('sb_user') || 'null');
+if (!token) { window.location.href = '/login.html'; }
+if (user) {
+  document.getElementById('userName').textContent = user.displayName || user.username;
+  document.getElementById('userRole').textContent = user.role === 'admin' ? 'แอดมิน' : 'ครู';
+  document.getElementById('avatarInitial').textContent = (user.displayName || user.username || '?')[0].toUpperCase();
+}
+
+function logout() {
+  localStorage.removeItem('sb_token');
+  localStorage.removeItem('sb_user');
+  window.location.href = '/login.html';
+}
+
+let allStudents = [];
+let currentFilter = 'all';
+
+async function fetchData() {
+  try {
+    const [studentsRes, wellbeingRes] = await Promise.all([
+      fetch('/api/students', { headers: { 'Authorization': 'Bearer ' + token } }),
+      fetch('/api/wellbeing-flags', { headers: { 'Authorization': 'Bearer ' + token } })
+    ]);
+    if (studentsRes.status === 401) { logout(); return; }
+    allStudents = await studentsRes.json();
+    const flags = await wellbeingRes.json();
+    renderStats(allStudents);
+    renderRiskTable(allStudents);
+    renderWellbeing(flags);
+    renderDropout(allStudents);
+  } catch (e) { console.error('fetch error:', e); }
+}
+
+function renderStats(students) {
+  const high = students.filter(s => s.riskScore >= 50).length;
+  const med = students.filter(s => s.riskScore >= 20 && s.riskScore < 50).length;
+  const low = students.filter(s => s.riskScore < 20).length;
+  const dropout = students.filter(s => s.riskScore >= 60 && (s.riskReasons || []).length >= 2).length;
+  document.getElementById('highCount').textContent = high;
+  document.getElementById('medCount').textContent = med;
+  document.getElementById('lowCount').textContent = low;
+  document.getElementById('dropoutCount').textContent = dropout;
+}
+
+function getLevel(score) {
+  if (score >= 50) return 'high';
+  if (score >= 20) return 'medium';
+  return 'low';
+}
+
+function getLevelLabel(score) {
+  if (score >= 50) return '<span class="badge high">🔴 เสี่ยงสูง</span>';
+  if (score >= 20) return '<span class="badge medium">🟡 เฝ้าระวัง</span>';
+  return '<span class="badge low">🟢 ปกติ</span>';
+}
+
+function getBarColor(score) {
+  if (score >= 50) return 'var(--danger)';
+  if (score >= 20) return 'var(--warning)';
+  return 'var(--success)';
+}
+
+function renderRiskTable(students) {
+  const filtered = currentFilter === 'all' ? students : students.filter(s => getLevel(s.riskScore) === currentFilter);
+  const search = (document.getElementById('searchBox')?.value || '').toLowerCase();
+  const list = search ? filtered.filter(s => s.name.toLowerCase().includes(search)) : filtered;
+  const tbody = document.getElementById('riskBody');
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">ไม่พบข้อมูล</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(s => {
+    const reasons = (s.riskReasons || []).join(' · ') || '—';
+    return `<tr>
+      <td><strong>${s.name}</strong></td>
+      <td>${s.grade || '—'}</td>
+      <td>${s.area || '—'}</td>
+      <td>${getLevelLabel(s.riskScore)}</td>
+      <td>${s.riskScore}<div class="score-bar"><div class="score-fill" style="width:${s.riskScore}%;background:${getBarColor(s.riskScore)}"></div></div></td>
+      <td class="reason-text">${reasons}</td>
+    </tr>`;
+  }).join('');
+}
+
+function filterRisk(level, btn) {
+  currentFilter = level;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderRiskTable(allStudents);
+}
+
+function filterStudents(q) { renderRiskTable(allStudents); }
+
+function showTab(tab) {
+  document.getElementById('riskSection').style.display = tab === 'risk' || tab === 'all' ? '' : 'none';
+  document.getElementById('wellbeingSection').style.display = tab === 'wellbeing' ? '' : 'none';
+  document.getElementById('dropoutSection').style.display = tab === 'dropout' ? '' : 'none';
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (tab === 'wellbeing') document.querySelectorAll('.nav-item')[2].classList.add('active');
+  else if (tab === 'dropout') document.querySelectorAll('.nav-item')[3].classList.add('active');
+  else document.querySelectorAll('.nav-item')[0].classList.add('active');
+}
+// Click dashboard nav => show risk
+document.querySelectorAll('.nav-item')[0].addEventListener('click', () => {
+  document.getElementById('riskSection').style.display = '';
+  document.getElementById('wellbeingSection').style.display = 'none';
+  document.getElementById('dropoutSection').style.display = 'none';
+});
+
+function renderWellbeing(flags) {
+  const tbody = document.getElementById('wellbeingBody');
+  if (!flags || !flags.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty-state">ยังไม่มี wellbeing flags</td></tr>';
+    return;
+  }
+  tbody.innerHTML = flags.map(f => `<tr>
+    <td><strong>${f.name || f.userId || '—'}</strong></td>
+    <td>${f.mood || '—'}</td>
+    <td>${f.timestamp ? new Date(f.timestamp).toLocaleString('th-TH') : '—'}</td>
+    <td class="reason-text">${f.note || '—'}</td>
+    <td><button class="action-btn" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✅ ติดตามแล้ว':'ติดตาม'">ติดตาม</button></td>
+  </tr>`).join('');
+}
+
+function renderDropout(students) {
+  const dropout = students.filter(s => s.riskScore >= 60 && (s.riskReasons || []).length >= 2);
+  const tbody = document.getElementById('dropoutBody');
+  if (!dropout.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty-state">🎉 ไม่มีนักเรียนเสี่ยงหลุดตอนนี้</td></tr>';
+    return;
+  }
+  tbody.innerHTML = dropout.map(s => `<tr>
+    <td><strong>${s.name}</strong></td>
+    <td>${s.grade || '—'}</td>
+    <td><span class="badge dropout">${s.riskScore}</span></td>
+    <td class="reason-text">${(s.riskReasons || []).join(' · ')}</td>
+    <td><button class="action-btn" onclick="this.classList.toggle('done');this.textContent=this.classList.contains('done')?'✅ ดูแลแล้ว':'ดูแล'">ดูแล</button></td>
+  </tr>`).join('');
+}
+
+// Auto refresh
+fetchData();
+setInterval(fetchData, 30000);
+</script>
+</body>
+</html>
